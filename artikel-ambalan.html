@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentasi Pramuka SMKN Pancatengah</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #f8f9fa;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, #1b5e20 0%, #0d47a1 100%);
+      color: white;
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .navbar-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .navbar-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .navbar-btn.active {
+      background: white;
+      color: #1b5e20;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Feed View */
+    .feed-header {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #1b5e20;
+      box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #1b5e20;
+      color: #1b5e20;
+    }
+
+    .filter-btn.active {
+      background: #1b5e20;
+      color: white;
+      border-color: #1b5e20;
+    }
+
+    /* Feed Cards */
+    .feed-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .article-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .article-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    .article-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0;
+    }
+
+    .article-thumb {
+      width: 200px;
+      height: 150px;
+      background: linear-gradient(135deg, #e0f2f1 0%, #b3e5fc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      overflow: hidden;
+    }
+
+    .article-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .article-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .article-header {
+      margin-bottom: 12px;
+    }
+
+    .article-category {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #e8f5e9;
+      color: #1b5e20;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .article-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .article-excerpt {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #999;
+      flex-wrap: wrap;
+    }
+
+    .article-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .article-actions button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-edit {
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+
+    .btn-edit:hover {
+      background: #bbdefb;
+    }
+
+    .btn-delete {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .btn-delete:hover {
+      background: #ffcdd2;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 15px;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      color: #1b5e20;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1b5e20;
+      box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .file-upload {
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f9f9f9;
+    }
+
+    .file-upload:hover {
+      border-color: #1b5e20;
+      background: #f0f7f0;
+    }
+
+    .file-upload input {
+      display: none;
+    }
+
+    .file-upload-text {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .preview-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: #1b5e20;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #0d47a1;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-state h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .read-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .read-modal.active {
+      display: flex;
+    }
+
+    .read-content {
+      background: white;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+    }
+
+    .read-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #e0f2f1 0%, #b3e5fc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+
+    .read-category {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #e8f5e9;
+      color: #1b5e20;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .read-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .read-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-wrap: wrap;
+    }
+
+    .read-body {
+      font-size: 15px;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .read-actions {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 20px;
+    }
+
+    .read-actions button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .btn-read-edit {
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+
+    .btn-read-delete {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .read-modal .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      .article-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .article-thumb {
+        width: 100%;
+        height: 180px;
+      }
+      
+      .modal-content,
+      .read-content {
+        padding: 20px;
+      }
+      
+      .read-img {
+        height: 250px;
+      }
+      
+      .read-title {
+        font-size: 18px;
+      }
+
+      .navbar-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .navbar h1 {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-content">
+    <h1>📰 Dokumentasi Pramuka SMKN Pancatengah</h1>
+    <div style="display: flex; gap: 10px;">
+      <button class="navbar-btn active" onclick="showFeed()">Feed</button>
+      <button class="navbar-btn" onclick="openWriteModal()">+ Tulis Artikel</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="feedView">
+    <div class="feed-header">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cari artikel..." onkeyup="filterArticles()">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterByCategory('semua')">Semua</button>
+        <button class="filter-btn" onclick="filterByCategory('Camping')">Camping</button>
+        <button class="filter-btn" onclick="filterByCategory('Latihan')">Latihan</button>
+        <button class="filter-btn" onclick="filterByCategory('Bakti Sosial')">Bakti Sosial</button>
+        <button class="filter-btn" onclick="filterByCategory('Lomba')">Lomba</button>
+        <button class="filter-btn" onclick="filterByCategory('Outbound')">Outbound</button>
+      </div>
+    </div>
+    
+    <div class="feed-container" id="feedContainer">
+      <!-- Artikel akan ditampilkan di sini -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tulis/Edit Artikel -->
+<div id="writeModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Tulis Artikel Baru</h2>
+      <button class="close-btn" onclick="closeWriteModal()">✕</button>
+    </div>
+    
+    <form onsubmit="submitArticle(event)">
+      <div class="form-group">
+        <label for="title">Judul Artikel *</label>
+        <input type="text" id="title" required placeholder="Masukkan judul artikel...">
+      </div>
+
+      <div class="form-group">
+        <label for="category">Kategori *</label>
+        <select id="category" required>
+          <option value="">-- Pilih Kategori --</option>
+          <option value="Camping">Camping/Mendaki</option>
+          <option value="Latihan">Latihan Rutin</option>
+          <option value="Upacara">Upacara/Perayaan</option>
+          <option value="Bakti Sosial">Bakti Sosial</option>
+          <option value="Lomba">Lomba/Kompetisi</option>
+          <option value="Outbound">Outbound/Adventure</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Tanggal Kegiatan *</label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Lokasi Kegiatan</label>
+        <input type="text" id="location" placeholder="Cth: Gunung Semeru, Jawa Timur">
+      </div>
+
+      <div class="form-group">
+        <label for="participants">Jumlah Peserta</label>
+        <input type="number" id="participants" min="0" placeholder="Cth: 50">
+      </div>
+
+      <div class="form-group">
+        <label>Upload Foto Kegiatan *</label>
+        <div class="file-upload" onclick="document.getElementById('photoInput').click()">
+          <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)">
+          <div class="file-upload-text">📷 Klik di sini atau drag & drop foto kegiatan</div>
+          <img id="photoPreview" class="preview-img" style="display: none;">
+        </div>
+        <input type="hidden" id="photoData">
+      </div>
+
+      <div class="form-group">
+        <label for="excerpt">Deskripsi Singkat *</label>
+        <textarea id="excerpt" required placeholder="Ringkas cerita kegiatan Anda (akan tampil di feed)..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Cerita Lengkap Kegiatan *</label>
+        <textarea id="content" required placeholder="Tulis detail lengkap tentang kegiatan, pembelajaran, dan pengalaman..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Publikasikan Artikel</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Baca Artikel -->
+<div id="readModal" class="read-modal">
+  <div class="read-content" onclick="event.stopPropagation()">
+    <button class="close-btn" onclick="closeReadModal()">✕</button>
+    
+    <img id="readImg" class="read-img">
+    
+    <div id="readCategory" class="read-category"></div>
+    <h1 id="readTitle" class="read-title"></h1>
+    
+    <div class="read-meta">
+      <span id="readDate"></span>
+      <span id="readLocation"></span>
+      <span id="readParticipants"></span>
+    </div>
+    
+    <div id="readBody" class="read-body"></div>
+    
+    <div class="read-actions">
+      <button class="btn-read-edit" onclick="editCurrentArticle()">Ubah</button>
+      <button class="btn-read-delete" onclick="deleteCurrentArticle()">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Inisialisasi data dari localStorage
+let articles = JSON.parse(localStorage.getItem('pramukaArticles')) || [
+  {
+    id: 1,
+    title: 'Pendakian Gunung Semeru: Puncak Tertinggi Jawa',
+    category: 'Camping',
+    date: '2024-08-15',
+    location: 'Gunung Semeru, Jawa Timur',
+    participants: 45,
+    excerpt: 'Kegiatan pendakian gunung tertinggi di Jawa yang menguji ketahanan fisik dan mental anggota pramuka SMKN Pancatengah.',
+    content: 'Pelaksanaan kegiatan pendakian Gunung Semeru dilakukan selama 3 hari dengan melibatkan 45 anggota pramuka dari SMKN Pancatengah. Peserta belajar tentang disiplin, gotong royong, dan apresiasi terhadap alam. Melalui kegiatan ini, kami berhasil menanamkan nilai-nilai kepramukaan melalui pengalaman langsung di alam terbuka. Semua peserta berhasil mencapai puncak dan menyaksikan sunrise yang memukau dari ketinggian 3.676 meter.',
+    photo: '⛺',
+    createdAt: new Date('2024-08-15').getTime()
+  },
+  {
+    id: 2,
+    title: 'Bakti Sosial di Panti Asuhan Harapan Bersama',
+    category: 'Bakti Sosial',
+    date: '2024-02-10',
+    location: 'Panti Asuhan Harapan, Bandung',
+    participants: 38,
+    excerpt: 'Anggota pramuka mengunjungi panti asuhan untuk memberikan bantuan dan edukasi kepada anak-anak asuh.',
+    content: 'Kegiatan bakti sosial ini merupakan implementasi nyata dari salah satu motto pramuka yaitu "Untuk sesama". Sebanyak 38 anggota pramuka SMKN Pancatengah berkontribusi dalam berbagai kegiatan di panti asuhan. Mulai dari renovasi ruang belajar, donasi perlengkapan sekolah, hingga interaksi langsung dengan anak-anak asuh melalui kegiatan edukatif. Pengalaman ini memberikan pembelajaran berharga tentang empati dan tanggung jawab sosial kepada semua peserta.',
+    photo: '🤝',
+    createdAt: new Date('2024-02-10').getTime()
+  }
+];
+
+let currentEditingId = null;
+let currentReadingId = null;
+let currentFilter = 'semua';
+
+function openWriteModal() {
+  currentEditingId = null;
+  document.getElementById('modalTitle').textContent = 'Tulis Artikel Baru';
+  document.getElementById('writeModal').classList.add('active');
+  document.querySelector('form').reset();
+  document.getElementById('photoPreview').style.display = 'none';
+}
+
+function closeWriteModal() {
+  document.getElementById('writeModal').classList.remove('active');
+  document.querySelector('form').reset();
+  document.getElementById('photoPreview').style.display = 'none';
+  currentEditingId = null;
+}
+
+function previewPhoto(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('photoPreview');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      document.getElementById('photoData').value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function submitArticle(e) {
+  e.preventDefault();
+  
+  const photoData = document.getElementById('photoData').value;
+  if (!photoData) {
+    alert('Mohon upload foto kegiatan!');
+    return;
+  }
+
+  const article = {
+    id: currentEditingId || Date.now(),
+    title: document.getElementById('title').value,
+    category: document.getElementById('category').value,
+    date: document.getElementById('date').value,
+    location: document.getElementById('location').value,
+    participants: parseInt(document.getElementById('participants').value) || 0,
+    excerpt: document.getElementById('excerpt').value,
+    content: document.getElementById('content').value,
+    photo: photoData,
+    createdAt: currentEditingId ? articles.find(a => a.id === currentEditingId).createdAt : Date.now()
+  };
+
+  if (currentEditingId) {
+    articles = articles.map(a => a.id === currentEditingId ? article : a);
+    alert('Artikel berhasil diperbarui!');
+  } else {
+    articles.unshift(article);
+    alert('Artikel berhasil dipublikasikan!');
+  }
+
+  localStorage.setItem('pramukaArticles', JSON.stringify(articles));
+  closeWriteModal();
+  renderFeed();
+}
+
+function renderFeed() {
+  const feed = document.getElementById('feedContainer');
+  let filtered = articles;
+
+  if (currentFilter !== 'semua') {
+    filtered = articles.filter(a => a.category === currentFilter);
+  }
+
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  if (searchTerm) {
+    filtered = filtered.filter(a => 
+      a.title.toLowerCase().includes(searchTerm) || 
+      a.excerpt.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  if (filtered.length === 0) {
+    feed.innerHTML = '<div class="empty-state"><h3>Belum ada artikel</h3><p>Jadilah yang pertama untuk membagikan dokumentasi kegiatan pramuka!</p></div>';
+    return;
+  }
+
+  feed.innerHTML = filtered.sort((a, b) => b.createdAt - a.createdAt).map(article => `
+    <div class="article-card" onclick="openReadModal(${article.id})">
+      <div class="article-row">
+        <div class="article-thumb">
+          ${typeof article.photo === 'string' && article.photo.startsWith('data:') 
+            ? `<img src="${article.photo}" alt="${article.title}">` 
+            : `<span>${article.photo}</span>`}
+        </div>
+        <div class="article-content">
+          <div>
+            <div class="article-header">
+              <span class="article-category">${article.category}</span>
+              <h3 class="article-title">${article.title}</h3>
+              <p class="article-excerpt">${article.excerpt}</p>
+            </div>
+            <div class="article-meta">
+              <span>📅 ${new Date(article.date).toLocaleDateString('id-ID')}</span>
+              <span>📍 ${article.location || '-'}</span>
+              <span>👥 ${article.participants} peserta</span>
+            </div>
+          </div>
+          <div class="article-actions" onclick="event.stopPropagation();">
+            <button class="btn-edit" onclick="editArticle(${article.id})">Ubah</button>
+            <button class="btn-delete" onclick="deleteArticle(${article.id})">Hapus</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openReadModal(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  currentReadingId = id;
+  
+  const readImg = document.getElementById('readImg');
+  if (typeof article.photo === 'string' && article.photo.startsWith('data:')) {
+    readImg.src = article.photo;
+    readImg.style.fontSize = 'inherit';
+  } else {
+    readImg.style.fontSize = '80px';
+    readImg.textContent = article.photo;
+  }
+
+  document.getElementById('readCategory').textContent = article.category;
+  document.getElementById('readTitle').textContent = article.title;
+  document.getElementById('readDate').textContent = '📅 ' + new Date(article.date).toLocaleDateString('id-ID');
+  document.getElementById('readLocation').textContent = '📍 ' + (article.location || '-');
+  document.getElementById('readParticipants').textContent = '👥 ' + article.participants + ' peserta';
+  document.getElementById('readBody').textContent = article.content;
+
+  document.getElementById('readModal').classList.add('active');
+}
+
+function closeReadModal() {
+  document.getElementById('readModal').classList.remove('active');
+  currentReadingId = null;
+}
+
+function editArticle(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  currentEditingId = id;
+  document.getElementById('modalTitle').textContent = 'Ubah Artikel';
+  document.getElementById('title').value = article.title;
+  document.getElementById('category').value = article.category;
+  document.getElementById('date').value = article.date;
+  document.getElementById('location').value = article.location;
+  document.getElementById('participants').value = article.participants;
+  document.getElementById('excerpt').value = article.excerpt;
+  document.getElementById('content').value = article.content;
+  document.getElementById('photoData').value = article.photo;
+
+  if (typeof article.photo === 'string' && article.photo.startsWith('data:')) {
+    document.getElementById('photoPreview').src = article.photo;
+    document.getElementById('photoPreview').style.display = 'block';
+  }
+
+  document.getElementById('writeModal').classList.add('active');
+  closeReadModal();
+}
+
+function editCurrentArticle() {
+  editArticle(currentReadingId);
+}
+
+function deleteArticle(id) {
+  if (confirm('Yakin ingin menghapus artikel ini?')) {
+    articles = articles.filter(a => a.id !== id);
+    localStorage.setItem('pramukaArticles', JSON.stringify(articles));
+    renderFeed();
+  }
+}
+
+function deleteCurrentArticle() {
+  deleteArticle(currentReadingId);
+  closeReadModal();
+}
+
+function filterByCategory(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderFeed();
+}
+
+function filterArticles() {
+  renderFeed();
+}
+
+function showFeed() {
+  document.getElementById('feedView').style.display = 'block';
+}
+
+// Render feed saat halaman dimuat
+renderFeed();
+</script>
+
+</body>
+</html>
