@@ -4,8 +4,100 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artikel Pramuka SMKN Pancatengah</title>
-  <!-- Menghubungkan ke file CSS -->
-  <link rel="stylesheet" href="style.css2">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: #f0f2f5; color: #1c1e21; }
+
+    /* Navbar Header */
+    .navbar {
+      background: #ffffff; padding: 12px 0; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-bottom: 1px solid #e4e6eb;
+    }
+    .navbar-content {
+      max-width: 700px; margin: 0 auto; padding: 0 15px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand-title { color: #1877f2; font-size: 20px; font-weight: 800; }
+    .btn-fb {
+      background: #1877f2; color: white; border: none; padding: 8px 16px;
+      border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;
+    }
+    .btn-fb:hover { background: #166fe5; }
+    .btn-secondary-fb {
+      background: #e4e6eb; color: #050505; border: none; padding: 6px 12px;
+      border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;
+    }
+
+    /* Layout Content */
+    .container { max-width: 700px; margin: 20px auto; padding: 0 15px; }
+    .feed-header {
+      background: white; padding: 15px; border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); margin-bottom: 15px;
+    }
+    .search-box input {
+      width: 100%; padding: 10px 15px; border: 1px solid #ccd0d5;
+      border-radius: 20px; font-size: 13px; background: #f0f2f5; margin-bottom: 12px;
+    }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 6px 14px; border: none; background: #e4e6eb;
+      color: #050505; border-radius: 18px; cursor: pointer; font-size: 13px; font-weight: 600;
+    }
+    .filter-btn.active { background: #e7f3ff; color: #1877f2; }
+
+    /* Cards / Feed */
+    .feed-container { display: flex; flex-direction: column; gap: 15px; }
+    .article-card {
+      background: white; border-radius: 8px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      padding: 16px; cursor: pointer;
+    }
+    .post-author-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%; background: #1877f2;
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 16px; text-transform: uppercase;
+    }
+    .author-details { display: flex; flex-direction: column; }
+    .author-name { font-weight: 700; font-size: 14px; color: #050505; }
+    .post-time { font-size: 11px; color: #65676b; }
+    .article-category {
+      display: inline-block; padding: 3px 10px; background: #e7f3ff;
+      color: #1877f2; border-radius: 12px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+    }
+    .article-title { font-size: 16px; font-weight: 700; color: #050505; margin-bottom: 6px; }
+    .article-excerpt { font-size: 13px; color: #333; margin-bottom: 10px; line-height: 1.4; }
+    .article-thumb {
+      width: 100%; max-height: 350px; background: #f0f2f5; display: flex;
+      align-items: center; justify-content: center; font-size: 40px;
+      border-radius: 6px; overflow: hidden; margin-bottom: 10px;
+    }
+    .article-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .article-actions { display: flex; gap: 8px; border-top: 1px solid #e4e6eb; padding-top: 10px; }
+
+    /* Modals */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px);
+      z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal.active { display: flex; }
+    .modal-card {
+      background: white; border-radius: 8px; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      width: 100%; max-width: 500px; overflow: hidden;
+    }
+    .modal-header {
+      padding: 15px 20px; border-bottom: 1px solid #dadde1;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .close-btn { background: #e4e6eb; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
+    .modal-body { padding: 20px; max-height: 80vh; overflow-y: auto; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; color: #65676b; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px; border: 1px solid #ccd0d5; border-radius: 6px; font-size: 13px;
+    }
+    .photo-preview-img { width: 100%; max-height: 150px; object-fit: cover; margin-top: 8px; display: none; border-radius: 6px; }
+  </style>
 </head>
 <body>
 
@@ -49,7 +141,7 @@
         </div>
         <div class="form-group">
           <label>PIN Rahasia Postingan (4 Angka) *</label>
-          <input type="password" id="postPin" maxlength="4" required placeholder="Contoh: 1234 (Digunakan jika ingin hapus/edit artikel ini nanti)">
+          <input type="password" id="postPin" maxlength="4" required placeholder="Contoh: 1234">
         </div>
         <div class="form-group">
           <label>Judul Artikel *</label>
@@ -103,7 +195,230 @@
   </div>
 </div>
 
-<!-- Menghubungkan ke file JavaScript -->
-<script src="script.js"></script>
+<script>
+const ADMIN_MASTER_PIN = "0000"; 
+
+let articles = JSON.parse(localStorage.getItem('pramuka_free_articles')) || [
+  {
+    id: 1,
+    authorName: 'Budi Santoso',
+    pin: '1234',
+    title: 'Juara 1 Lomba LKBB Tingkat Kabupaten',
+    category: 'Pencapaian',
+    excerpt: 'Tim Ambalan SMKN Pancatengah berhasil memenangkan piala utama.',
+    content: 'Alhamdulillah, berkat latihan rutin dan disiplin tinggi, regu Pramuka SMKN Pancatengah berhasil menyabet Juara 1 pada Lomba Keterampilan Baris Berbaris.',
+    photo: '🏆',
+    createdAt: new Date().getTime()
+  }
+];
+
+let currentEditingId = null;
+let currentFilter = 'semua';
+
+function openWriteModal() {
+  currentEditingId = null;
+  document.getElementById('modalTitle').textContent = 'Tulis Artikel Baru';
+  document.getElementById('writeModal').classList.add('active');
+  document.querySelector('#writeModal form').reset();
+  document.getElementById('photoPreview').style.display = 'none';
+}
+
+function closeWriteModal() {
+  document.getElementById('writeModal').classList.remove('active');
+}
+
+function previewPhoto(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      document.getElementById('photoPreview').src = evt.target.result;
+      document.getElementById('photoPreview').style.display = 'block';
+      document.getElementById('photoData').value = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function submitArticle(e) {
+  e.preventDefault();
+  const photoData = document.getElementById('photoData').value;
+
+  if (currentEditingId) {
+    articles = articles.map(a => {
+      if (a.id === currentEditingId) {
+        return {
+          ...a,
+          authorName: document.getElementById('authorName').value,
+          pin: document.getElementById('postPin').value,
+          title: document.getElementById('title').value,
+          category: document.getElementById('category').value,
+          excerpt: document.getElementById('excerpt').value,
+          content: document.getElementById('content').value,
+          photo: photoData || a.photo
+        };
+      }
+      return a;
+    });
+  } else {
+    const newArticle = {
+      id: Date.now(),
+      authorName: document.getElementById('authorName').value,
+      pin: document.getElementById('postPin').value,
+      title: document.getElementById('title').value,
+      category: document.getElementById('category').value,
+      excerpt: document.getElementById('excerpt').value,
+      content: document.getElementById('content').value,
+      photo: photoData || '📌',
+      createdAt: Date.now()
+    };
+    articles.unshift(newArticle);
+  }
+
+  localStorage.setItem('pramuka_free_articles', JSON.stringify(articles));
+  closeWriteModal();
+  renderFeed();
+}
+
+function renderFeed() {
+  const container = document.getElementById('feedContainer');
+  let filtered = articles;
+
+  if (currentFilter !== 'semua') {
+    filtered = filtered.filter(a => a.category === currentFilter);
+  }
+
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  if (query) {
+    filtered = filtered.filter(a => a.title.toLowerCase().includes(query) || a.excerpt.toLowerCase().includes(query));
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="text-align:center; padding:30px; background:white; border-radius:8px; color:#65676b;">Belum ada artikel.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.sort((a,b) => b.createdAt - a.createdAt).map(article => {
+    const firstLetter = article.authorName ? article.authorName.charAt(0) : '?';
+
+    return `
+      <div class="article-card" onclick="openReadModal(${article.id})">
+        <div class="post-author-bar">
+          <div class="author-avatar">${firstLetter}</div>
+          <div class="author-details">
+            <span class="author-name">${article.authorName}</span>
+            <span class="post-time">${new Date(article.createdAt).toLocaleDateString('id-ID')}</span>
+          </div>
+        </div>
+
+        <span class="article-category">${article.category}</span>
+        <h3 class="article-title">${article.title}</h3>
+        <p class="article-excerpt">${article.excerpt}</p>
+
+        <div class="article-thumb">
+          ${article.photo.startsWith('data:') ? `<img src="${article.photo}">` : `<span>${article.photo}</span>`}
+        </div>
+
+        <div class="article-actions" onclick="event.stopPropagation();">
+          <button class="btn-secondary-fb" onclick="editArticle(${article.id})">Ubah</button>
+          <button class="btn-secondary-fb" style="color:red;" onclick="deleteArticle(${article.id})">Hapus</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openReadModal(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  const firstLetter = article.authorName ? article.authorName.charAt(0) : '?';
+
+  document.getElementById('readAuthorArea').innerHTML = `
+    <div class="author-avatar">${firstLetter}</div>
+    <div class="author-details">
+      <span class="author-name">${article.authorName}</span>
+      <span class="post-time">${new Date(article.createdAt).toLocaleString('id-ID')}</span>
+    </div>
+  `;
+
+  document.getElementById('readCategory').textContent = article.category;
+  document.getElementById('readTitle').textContent = article.title;
+  document.getElementById('readBody').textContent = article.content;
+
+  const imgContainer = document.getElementById('readImgContainer');
+  if (article.photo.startsWith('data:')) {
+    document.getElementById('readImg').src = article.photo;
+    imgContainer.style.display = 'flex';
+  } else {
+    imgContainer.style.display = 'none';
+  }
+
+  document.getElementById('readActions').innerHTML = `
+    <button class="btn-secondary-fb" onclick="editArticle(${article.id})">Ubah</button>
+    <button class="btn-secondary-fb" style="color:red;" onclick="deleteArticle(${article.id})">Hapus</button>
+  `;
+
+  document.getElementById('readModal').classList.add('active');
+}
+
+function closeReadModal() {
+  document.getElementById('readModal').classList.remove('active');
+}
+
+function deleteArticle(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  const inputPin = prompt(`Masukkan PIN 4 angka postingan ini (atau PIN Pembina):`);
+  
+  if (inputPin === article.pin || inputPin === ADMIN_MASTER_PIN) {
+    if (confirm('Yakin ingin menghapus artikel ini?')) {
+      articles = articles.filter(a => a.id !== id);
+      localStorage.setItem('pramuka_free_articles', JSON.stringify(articles));
+      closeReadModal();
+      renderFeed();
+    }
+  } else if (inputPin !== null) {
+    alert('PIN salah! Anda tidak bisa menghapus artikel ini.');
+  }
+}
+
+function editArticle(id) {
+  const article = articles.find(a => a.id === id);
+  if (!article) return;
+
+  const inputPin = prompt(`Masukkan PIN 4 angka postingan ini (atau PIN Pembina):`);
+
+  if (inputPin === article.pin || inputPin === ADMIN_MASTER_PIN) {
+    currentEditingId = id;
+    document.getElementById('modalTitle').textContent = 'Ubah Artikel';
+    document.getElementById('authorName').value = article.authorName;
+    document.getElementById('postPin').value = article.pin;
+    document.getElementById('title').value = article.title;
+    document.getElementById('category').value = article.category;
+    document.getElementById('excerpt').value = article.excerpt;
+    document.getElementById('content').value = article.content;
+
+    document.getElementById('writeModal').classList.add('active');
+    closeReadModal();
+  } else if (inputPin !== null) {
+    alert('PIN salah! Anda tidak bisa mengubah artikel ini.');
+  }
+}
+
+function filterByCategory(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderFeed();
+}
+
+function filterArticles() {
+  renderFeed();
+}
+
+renderFeed();
+</script>
 </body>
 </html>
