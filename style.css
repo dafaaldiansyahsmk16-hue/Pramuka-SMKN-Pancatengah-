@@ -1,0 +1,15 @@
+.gudep{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+.gudep span{
+    padding:7px 12px;
+    border:1px solid rgba(214,168,79,.5);
+    border-radius:999px;
+    color:var(--gold);
+    font-size:13px;
+    font-weight:800;
+}
